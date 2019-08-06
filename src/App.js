@@ -4,7 +4,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import Form from "react-bootstrap/Form";
-import ListGroup from "react-bootstrap/ListGroup";
+import CityList from "./CityList";
 
 class App extends React.Component {
   constructor(props) {
@@ -54,15 +54,7 @@ class App extends React.Component {
               </InputGroup.Append>
             </InputGroup>
           </Form>
-          <ListGroup>
-            {this.state.cities.map((city, index) => {
-              return (
-                <ListGroup.Item onClick={this.deleteCity(city)} key={index}>
-                  {city}
-                </ListGroup.Item>
-              );
-            })}
-          </ListGroup>
+          <CityList cities={this.state.cities} />
         </div>
       </div>
     );
