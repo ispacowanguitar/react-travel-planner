@@ -16,6 +16,15 @@ class App extends React.Component {
     this.input = React.createRef();
   }
 
+  deleteCity = cityToDelete => {
+    return () => {
+      const cities = this.state.cities.filter(city => {
+        return city !== cityToDelete;
+      });
+      this.setState({ cities: cities });
+    };
+  };
+
   handleChange = event => {
     this.setState({ inputValue: event.target.value });
   };
@@ -47,7 +56,11 @@ class App extends React.Component {
           </Form>
           <ListGroup>
             {this.state.cities.map((city, index) => {
-              return <ListGroup.Item key={index}>{city}</ListGroup.Item>;
+              return (
+                <ListGroup.Item onClick={this.deleteCity(city)} key={index}>
+                  {city}
+                </ListGroup.Item>
+              );
             })}
           </ListGroup>
         </div>
