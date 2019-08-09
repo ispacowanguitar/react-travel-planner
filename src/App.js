@@ -54,7 +54,7 @@ class App extends React.Component {
               </InputGroup.Append>
             </InputGroup>
           </Form>
-          <CityList cities={this.state.cities} />
+          <CityList cities={this.state.cities} delete={this.deleteCity} />
         </div>
       </div>
     );
