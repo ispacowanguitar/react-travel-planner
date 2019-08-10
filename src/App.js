@@ -11,7 +11,22 @@ class App extends React.Component {
     super(props);
     this.state = {
       inputValue: "",
-      cities: []
+      cities: [
+        "Chicago",
+        "Paris",
+        "New York",
+        "Hong Kong",
+        "Barcelona",
+        "Tokyo",
+        "Tel Aviv",
+        "Jerusalem",
+        "Rome",
+        "Perth",
+        "San Francisco",
+        "Los Angeles",
+        "Austin",
+        "San Diego"
+      ]
     };
     this.input = React.createRef();
   }
@@ -54,7 +69,7 @@ class App extends React.Component {
               </InputGroup.Append>
             </InputGroup>
           </Form>
-          <CityList cities={this.state.cities} delete={this.deleteCity} />
+          <CityList cities={this.state.cities} deleteCity={this.deleteCity} />
         </div>
       </div>
     );

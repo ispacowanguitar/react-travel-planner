@@ -15,14 +15,23 @@ const CityList = props => {
           >
             {city}
             {currentlyHoveringIndex === index && (
-              <Button
-                style={{ float: "right" }}
-                size="sm"
-                variant="outline-danger"
-                onClick={props.delete(city)}
-              >
-                delete
-              </Button>
+              <>
+                <Button
+                  style={{ float: "right" }}
+                  size="sm"
+                  variant="outline-danger"
+                  onClick={props.deleteCity(city)}
+                >
+                  delete
+                </Button>
+                <Button
+                  style={{ float: "right", marginRight: "10px" }}
+                  size="sm"
+                  variant="outline-info"
+                >
+                  visited
+                </Button>
+              </>
             )}
           </ListGroup.Item>
         );
