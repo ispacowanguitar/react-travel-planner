@@ -13,7 +13,7 @@ const CityList = props => {
             onMouseEnter={() => setCurrentlyHoveringIndex(index)}
             onMouseLeave={() => setCurrentlyHoveringIndex(-1)}
           >
-            {city}
+            {city.name}
             {currentlyHoveringIndex === index && (
               <>
                 <Button
@@ -24,13 +24,16 @@ const CityList = props => {
                 >
                   delete
                 </Button>
-                <Button
-                  style={{ float: "right", marginRight: "10px" }}
-                  size="sm"
-                  variant="outline-info"
-                >
-                  visited
-                </Button>
+                {!city.visited && (
+                  <Button
+                    style={{ float: "right", marginRight: "10px" }}
+                    size="sm"
+                    variant="outline-info"
+                    onClick={props.markAsVisited(city.name)}
+                  >
+                    visited
+                  </Button>
+                )}
               </>
             )}
           </ListGroup.Item>

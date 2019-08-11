@@ -4,6 +4,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import Form from "react-bootstrap/Form";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
 import CityList from "./CityList";
 
 class App extends React.Component {
@@ -12,24 +14,58 @@ class App extends React.Component {
     this.state = {
       inputValue: "",
       cities: [
-        "Chicago",
-        "Paris",
-        "New York",
-        "Hong Kong",
-        "Barcelona",
-        "Tokyo",
-        "Tel Aviv",
-        "Jerusalem",
-        "Rome",
-        "Perth",
-        "San Francisco",
-        "Los Angeles",
-        "Austin",
-        "San Diego"
+        {
+          name: "Chicago",
+          visited: false
+        },
+        {
+          name: "Paris",
+          visited: false
+        },
+        {
+          name: "New York",
+          visited: false
+        },
+        {
+          name: "Hong Kong",
+          visited: false
+        },
+        {
+          name: "Barcelona",
+          visited: false
+        },
+        {
+          name: "Tokyo",
+          visited: false
+        }
       ]
     };
     this.input = React.createRef();
   }
+
+  visitedCities = () => {
+    return this.state.cities.filter(city => {
+      return city.visited;
+    });
+  };
+
+  notVisitedCities = () => {
+    return this.state.cities.filter(city => {
+      return !city.visited;
+    });
+  };
+
+  markAsVisited = visitedCity => {
+    return () => {
+      const newCities = this.state.cities.map(city => {
+        if (city.name === visitedCity) {
+          return { name: visitedCity, visited: true };
+        }
+        return city;
+      });
+      this.setState({ cities: newCities });
+    };
+  };
 
   deleteCity = cityToDelete => {
     return () => {
@@ -47,7 +83,9 @@ class App extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     this.setState({
-      cities: this.state.cities.concat([this.state.inputValue]),
+      cities: this.state.cities.concat([
+        { name: this.state.inputValue, visited: false }
+      ]),
       inputValue: ""
     });
   };
@@ -69,7 +107,21 @@ class App extends React.Component {
               </InputGroup.Append>
             </InputGroup>
           </Form>
-          <CityList cities={this.state.cities} deleteCity={this.deleteCity} />
+          <Tabs defaultActiveKey="wishList">
+            <Tab eventKey="wishList" title="wishList">
+              <CityList
+                cities={this.notVisitedCities()}
+                deleteCity={this.deleteCity}
+                markAsVisited={this.markAsVisited}
+              />
+            </Tab>
+            <Tab eventKey="visited" title="visited">
+              <CityList
+                cities={this.visitedCities()}
+                deleteCity={this.deleteCity}
+              />
+            </Tab>
+          </Tabs>
         </div>
       </div>
     );
