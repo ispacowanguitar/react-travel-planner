@@ -12,6 +12,7 @@ const CityList = props => {
             key={`city-${index}`}
             onMouseEnter={() => setCurrentlyHoveringIndex(index)}
             onMouseLeave={() => setCurrentlyHoveringIndex(-1)}
+            onClick={props.setActiveCity(city.name)}
           >
             {city.name}
             {currentlyHoveringIndex === index && (

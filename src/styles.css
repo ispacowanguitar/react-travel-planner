@@ -3,6 +3,12 @@
 }
 .cities {
   width: 50%;
+  display: inline-block;
+}
+
+.cityList {
+  display: inline-block;
+  float: right;
 }
 
 .list-group-item {

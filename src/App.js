@@ -7,42 +7,25 @@ import Form from "react-bootstrap/Form";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import CityList from "./CityList";
+import CityDetails from "./CityDetails";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: "",
+      activeCity: "",
       cities: [
-        {
-          name: "Chicago",
-          visited: false
-        },
-        {
-          name: "Paris",
-          visited: false
-        },
-        {
-          name: "New York",
-          visited: false
-        },
-        {
-          name: "Hong Kong",
-          visited: false
-        },
-        {
-          name: "Barcelona",
-          visited: false
-        },
-        {
-          name: "Tokyo",
-          visited: false
-        }
+        { name: "Chicago", visited: false },
+        { name: "Paris", visited: false },
+        { name: "New York", visited: false },
+        { name: "Hong Kong", visited: false },
+        { name: "Barcelona", visited: false },
+        { name: "Tokyo", visited: false }
       ]
     };
     this.input = React.createRef();
   }
-
   visitedCities = () => {
     return this.state.cities.filter(city => {
       return city.visited;
@@ -55,8 +38,14 @@ class App extends React.Component {
     });
   };
 
-  markAsVisited = visitedCity => {
+  setActiveCity = city => {
     return () => {
+      this.setState({ activeCity: city });
+    };
+  };
+
+  markAsVisited = visitedCity => {
+    return event => {
       const newCities = this.state.cities.map(city => {
         if (city.name === visitedCity) {
           return { name: visitedCity, visited: true };
@@ -64,15 +53,17 @@ class App extends React.Component {
         return city;
       });
       this.setState({ cities: newCities });
+      event.stopPropagation();
     };
   };
 
   deleteCity = cityToDelete => {
-    return () => {
+    return event => {
       const cities = this.state.cities.filter(city => {
         return city !== cityToDelete;
       });
       this.setState({ cities: cities });
+      event.stopPropagation();
     };
   };
 
@@ -113,15 +104,20 @@ class App extends React.Component {
                 cities={this.notVisitedCities()}
                 deleteCity={this.deleteCity}
                 markAsVisited={this.markAsVisited}
+                setActiveCity={this.setActiveCity}
               />
             </Tab>
             <Tab eventKey="visited" title="visited">
               <CityList
                 cities={this.visitedCities()}
                 deleteCity={this.deleteCity}
+                setActiveCity={this.setActiveCity}
               />
             </Tab>
           </Tabs>
+        </div>
+        <div className="cityList">
+          <CityDetails cityName={this.state.activeCity} />
         </div>
       </div>
     );
