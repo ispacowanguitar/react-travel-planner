@@ -117,7 +117,9 @@ class App extends React.Component {
           </Tabs>
         </div>
         <div className="cityList">
-          <CityDetails cityName={this.state.activeCity} />
+          {this.state.activeCity !== "" && (
+            <CityDetails cityName={this.state.activeCity} />
+          )}
         </div>
       </div>
     );
